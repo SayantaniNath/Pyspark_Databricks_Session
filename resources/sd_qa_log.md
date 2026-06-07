@@ -440,3 +440,24 @@ Yes — many options exist:
 **Pick Cosmos** when: on Azure, need multi-model APIs.
 
 Interview answer: "If on AWS → Aurora Global. On GCP → Spanner. CockroachDB for cloud-agnostic/open-source/multi-cloud scenarios."
+
+---
+
+**Q: Database segregation based on CAP theorem**
+
+CAP = Consistency + Availability + Partition Tolerance. Only 2 of 3 guaranteed. P is mandatory for distributed systems → real trade-off is C vs A.
+
+**CP (Consistency + Partition Tolerance):** HBase, MongoDB, CockroachDB, Google Spanner, TiDB, ZooKeeper, etcd, Redis cluster
+**AP (Availability + Partition Tolerance):** Cassandra, DynamoDB, CouchDB, Riak
+**CA (single node only):** MySQL, PostgreSQL, Oracle, SQLite — become CP or AP once replicated
+
+Where discussed DBs land:
+- CockroachDB → CP (serializable, rejects writes during partition)
+- Spanner → CP (TrueTime API)
+- Cosmos DB → Tunable (5 levels from strong CP to eventual AP)
+- Cassandra → AP (tune per query)
+- AlloyDB → CP
+
+When to pick: CP = banking/payments (stale data = wrong balance). AP = social feeds, DNS, shopping carts (slightly stale is fine).
+
+Interview one-liner: "P is non-negotiable, so it's really CP vs AP. CP sacrifices availability during partition. AP sacrifices consistency. Modern DBs like Cosmos let you tune per operation."
