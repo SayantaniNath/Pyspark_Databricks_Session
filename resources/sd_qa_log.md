@@ -421,3 +421,22 @@ All three are distributed SQL databases but built for different problems.
 **CockroachDB** — Globally distributed Postgres-compatible OLTP. Survives region failures, active-active multi-region, serializable consistency. No analytics engine — pure OLTP.
 
 **Interview one-liner:** Pick CockroachDB for geo-distribution + resilience, TiDB for HTAP (MySQL), AlloyDB for managed GCP Postgres with analytics acceleration.
+
+**Follow-up Q: Aren't there other DBs with always-on / multi-region? Why CockroachDB specifically?**
+
+Yes — many options exist:
+
+| Database | Cloud | Multi-region HA | Notes |
+|---|---|---|---|
+| Amazon Aurora Global | AWS | ✅ Cross-region read replicas | Postgres/MySQL, managed, most popular on AWS |
+| Azure Cosmos DB | Azure | ✅ Active-active multi-region | Multi-model APIs |
+| Google Spanner | GCP | ✅ Global, strongest consistency | Best-in-class for consistency |
+| CockroachDB | Any | ✅ Active-active | Open source, cloud-agnostic |
+| YugabyteDB | Any | ✅ Active-active | Open source, Postgres compat, similar to CockroachDB |
+
+**Pick CockroachDB when:** multi-cloud, cloud-agnostic, open source control, or avoiding vendor lock-in.
+**Pick Aurora Global** when: already on AWS, want managed, simpler ops.
+**Pick Spanner** when: on GCP, need the strongest global consistency guarantees.
+**Pick Cosmos** when: on Azure, need multi-model APIs.
+
+Interview answer: "If on AWS → Aurora Global. On GCP → Spanner. CockroachDB for cloud-agnostic/open-source/multi-cloud scenarios."
